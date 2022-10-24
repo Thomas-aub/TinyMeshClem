@@ -29,6 +29,7 @@ void MainWindow::CreateActions()
 {
 	// Buttons
     connect(uiw->boxMesh, SIGNAL(clicked()), this, SLOT(BoxMeshExample()));
+    connect(uiw->sphereMesh, SIGNAL(clicked()),this,SLOT(SphereMeshExemple()));
     connect(uiw->sphereImplicit, SIGNAL(clicked()), this, SLOT(SphereImplicitExample()));
     connect(uiw->resetcameraButton, SIGNAL(clicked()), this, SLOT(ResetCamera()));
     connect(uiw->wireframe, SIGNAL(clicked()), this, SLOT(UpdateMaterial()));
@@ -59,6 +60,41 @@ void MainWindow::BoxMeshExample()
 
 	meshColor = MeshColor(boxMesh, cols, boxMesh.VertexIndexes());
 	UpdateGeometry();
+}
+
+void MainWindow::SphereMeshExemple()
+{
+    Mesh sphereMesh = Mesh(Sphere(Vector(0,0,0),1,10));
+
+    std::vector<Color> cols;
+    cols.resize(sphereMesh.Vertexes());
+
+    for (int i = 0; i < cols.size(); i++)
+        cols[i] = Color(double(i) / 6.0, fmod(double(i) * 39.478378, 1.0), 0.0);
+
+    meshColor = MeshColor(sphereMesh, cols, sphereMesh.VertexIndexes());
+
+    UpdateGeometry();//ne pas appeler pour debuger les points
+    /*
+    Sphere s = Sphere(Vector(0.0,0.0,0.0),1,10);
+    Mesh boxMesh = Mesh(s);
+    int w =0;
+    for(const Vector v: s.points){
+        Box b = Box(v, 0.1);
+        Mesh m  = Mesh(b);
+        meshWidget->AddMesh(QString::number(w),m);
+        w++;
+    }
+    std::vector<Color> cols;
+    cols.resize(boxMesh.Vertexes());
+
+    for (int i = 0; i < cols.size(); i++)
+        cols[i] = Color(double(i) / 6.0, fmod(double(i) * 39.478378, 1.0), 0.0);
+
+    meshColor = MeshColor(boxMesh, cols, boxMesh.VertexIndexes());
+
+  //  UpdateGeometry();//ne pas appeler pour debuger les points
+  */
 }
 
 void MainWindow::SphereImplicitExample()
