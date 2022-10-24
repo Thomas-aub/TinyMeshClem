@@ -66,7 +66,7 @@ This function weights the normals of the faces by their corresponding area.
 */
 void Mesh::SmoothNormals()
 {
-  // Initialize 
+  // Initialize
   normals.resize(vertices.size(), Vector::Null);
 
   narray = varray;
@@ -80,7 +80,7 @@ void Mesh::SmoothNormals()
     normals[narray[i + 2]] += tn;
   }
 
-  // Normalize 
+  // Normalize
   for (int i = 0; i < normals.size(); i++)
   {
     Normalize(normals[i]);
@@ -201,6 +201,43 @@ Mesh::Mesh(const Box& box)
 
   AddTriangle(3, 2, 7, 3);
   AddTriangle(6, 7, 2, 3);
+}
+
+Mesh::Mesh(const Sphere& sphere)
+{
+  // Vertices
+  vertices.resize(sphere.nbPoints*sphere.nbPoints);
+
+  for (int i = 0; i < sphere.nbPoints*sphere.nbPoints; i++)
+
+  {
+    vertices[i] = sphere.points[i];
+    std::cout<<sphere.points[i]<<std::endl;
+
+  }
+
+
+  // Reserve space for the triangle array
+  varray.reserve(sphere.nbPoints * sphere.nbPoints);
+  narray.reserve(sphere.nbPoints * sphere.nbPoints);
+
+  for(const Vector v : sphere.points){
+      normals.push_back(v);
+  }
+
+  for(int i =0; i<sphere.nbPoints; i++){
+       for(int j =0; j<sphere.nbPoints; j++){
+            AddSmoothTriangle(
+                  i*sphere.nbPoints+j, j,
+                  (i+1)*sphere.nbPoints+j,j,
+                  (i+1)*sphere.nbPoints+(j+1),j);
+
+            AddSmoothTriangle(
+                  i*sphere.nbPoints+j, j,
+                  (i+1)*sphere.nbPoints+(j+1),j,
+                  (i)*sphere.nbPoints+(j+1),j);
+       }
+  }
 }
 
 /*!
