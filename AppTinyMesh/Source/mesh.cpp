@@ -222,20 +222,19 @@ Mesh::Mesh(const Sphere& sphere)
   narray.reserve(sphere.nbPoints * sphere.nbPoints);
 
   for(const Vector v : sphere.points){
-      normals.push_back(v);
+      normals.push_back(Vector(sphere.centre[0],sphere.centre[1],sphere.centre[2])-v);
   }
-
-  for(int i =0; i<sphere.nbPoints; i++){
-       for(int j =0; j<sphere.nbPoints; j++){
+  for(int i =0; i<sphere.nbPoints-1; i++){
+       for(int j =0; j<sphere.nbPoints-1; j++){
             AddSmoothTriangle(
-                  i*sphere.nbPoints+j, j,
-                  (i+1)*sphere.nbPoints+j,j,
-                  (i+1)*sphere.nbPoints+(j+1),j);
+                  i*sphere.nbPoints+j, i*sphere.nbPoints+j,
+                  (i+1)*sphere.nbPoints+j,(i+1)*sphere.nbPoints+j,
+                  (i+1)*sphere.nbPoints+(j+1),(i+1)*sphere.nbPoints+(j+1));
 
             AddSmoothTriangle(
-                  i*sphere.nbPoints+j, j,
-                  (i+1)*sphere.nbPoints+(j+1),j,
-                  (i)*sphere.nbPoints+(j+1),j);
+                  i*sphere.nbPoints+j, i*sphere.nbPoints+j,
+                  (i+1)*sphere.nbPoints+(j+1), (i+1)*sphere.nbPoints+(j+1),
+                  (i)*sphere.nbPoints+(j+1), (i)*sphere.nbPoints+(j+1));
        }
   }
 }

@@ -64,7 +64,8 @@ void MainWindow::BoxMeshExample()
 
 void MainWindow::SphereMeshExemple()
 {
-    Mesh sphereMesh = Mesh(Sphere(Vector(0,0,0),1,10));
+
+    Mesh sphereMesh = Mesh(Sphere(Vector(0,0,0),2,50));
 
     std::vector<Color> cols;
     cols.resize(sphereMesh.Vertexes());
@@ -75,7 +76,8 @@ void MainWindow::SphereMeshExemple()
     meshColor = MeshColor(sphereMesh, cols, sphereMesh.VertexIndexes());
 
     UpdateGeometry();//ne pas appeler pour debuger les points
-    /*
+
+/*
     Sphere s = Sphere(Vector(0.0,0.0,0.0),1,10);
     Mesh boxMesh = Mesh(s);
     int w =0;
@@ -94,7 +96,7 @@ void MainWindow::SphereMeshExemple()
     meshColor = MeshColor(boxMesh, cols, boxMesh.VertexIndexes());
 
   //  UpdateGeometry();//ne pas appeler pour debuger les points
-  */
+*/
 }
 
 void MainWindow::SphereImplicitExample()
