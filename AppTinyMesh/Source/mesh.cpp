@@ -216,7 +216,6 @@ Mesh::Mesh(const Sphere& sphere)
 
   }
 
-
   // Reserve space for the triangle array
   varray.reserve(sphere.nbPoints * sphere.nbPoints);
   narray.reserve(sphere.nbPoints * sphere.nbPoints);
@@ -238,6 +237,37 @@ Mesh::Mesh(const Sphere& sphere)
        }
   }
 }
+Mesh::Mesh(const Torus& torus){
+    vertices.resize(torus.points.size());
+
+    int i =0;
+    for(const Vector v : torus.points){
+        vertices[i] = v;
+        i++;
+        normals.push_back(Vector(torus.centre[0],torus.centre[1],torus.centre[2])-v);
+    }
+    for(int stack = 0; stack<= torus.st-1; stack++){
+        for(int slice = 0; slice<= torus.sl; slice++){
+
+            int i1 = stack + (slice * torus.sl);
+            int i2 = (stack +1) + (slice * torus.sl);
+            int i3 = stack + ((slice +1)*torus.sl);
+            int i4 = (stack + 1 )+ ((slice +1)* torus.sl);
+
+            AddSmoothTriangle(
+                   i1 , i1,
+                   i3 , i3,
+                   i4 , i4);
+
+            AddSmoothTriangle(
+                    i1 , i1,
+                    i4 , i4,
+                    i2 , i2);
+        }
+    }
+}
+
+
 
 /*!
 \brief Scale the mesh.
@@ -260,7 +290,6 @@ void Mesh::Scale(double s)
         }
     }
 }
-
 
 
 #include <QtCore/QFile>

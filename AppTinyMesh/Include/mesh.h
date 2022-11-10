@@ -4,6 +4,7 @@
 #include "sphere.h"
 #include "ray.h"
 #include "mathematics.h"
+#include "torus.h"
 
 // Triangle
 class Triangle
@@ -122,6 +123,7 @@ public:
   // Constructors from core classes
   explicit Mesh(const Box&);
   explicit Mesh(const Sphere&);
+  explicit Mesh(const Torus& torus);
 
   void Load(const QString&);
   void SaveObj(const QString&, const QString&) const;
