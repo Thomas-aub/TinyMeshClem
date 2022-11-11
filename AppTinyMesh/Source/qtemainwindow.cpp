@@ -1,6 +1,7 @@
 #include "qte.h"
 #include "implicits.h"
 #include "ui_interface.h"
+#include <chrono>
 
 MainWindow::MainWindow() : QMainWindow(), uiw(new Ui::Assets)
 {
@@ -32,6 +33,7 @@ void MainWindow::CreateActions()
     connect(uiw->sphereMesh, SIGNAL(clicked()),this,SLOT(SphereMeshExemple()));
     connect(uiw->torusMesh, SIGNAL(clicked()),this,SLOT(TorusMeshExemple()));
     connect(uiw->cylinderMesh, SIGNAL(clicked()),this,SLOT(CylindreMeshExemple()));
+    connect(uiw->capsuleMesh, SIGNAL(clicked()),this,SLOT(CapsuleMeshExemple()));
     connect(uiw->sphereImplicit, SIGNAL(clicked()), this, SLOT(SphereImplicitExample()));
     connect(uiw->resetcameraButton, SIGNAL(clicked()), this, SLOT(ResetCamera()));
     connect(uiw->wireframe, SIGNAL(clicked()), this, SLOT(UpdateMaterial()));
@@ -67,7 +69,8 @@ void MainWindow::BoxMeshExample()
 void MainWindow::SphereMeshExemple()
 {
 
-    Mesh sphereMesh = Mesh(Capsule(Vector(0,0,0), 1,2, 50));
+
+    Mesh sphereMesh = Mesh(Sphere(Vector(0,0,0), 1, 50));
 
     std::vector<Color> cols;
     cols.resize(sphereMesh.Vertexes());
@@ -102,6 +105,21 @@ void MainWindow::SphereMeshExemple()
     */
 }
 
+
+void MainWindow::CapsuleMeshExemple()
+{
+    Mesh capsuleMesh = Mesh(Capsule(Vector(0,0,0), 1, 2, 50));
+
+    std::vector<Color> cols;
+    cols.resize(capsuleMesh.Vertexes());
+    for (int i = 0; i < cols.size(); i++)
+        cols[i] = Color(double(i) / 6.0, fmod(double(i) * 39.478378, 1.0), 0.0);
+
+    meshColor = MeshColor(capsuleMesh, cols, capsuleMesh.VertexIndexes());
+
+    UpdateGeometry();//ne pas appeler pour debuger les points
+}
+
 void MainWindow::TorusMeshExemple()
 {
 
@@ -121,7 +139,7 @@ void MainWindow::TorusMeshExemple()
 void MainWindow::CylindreMeshExemple()
 {
 
-    Mesh cylindreMesh = Mesh(Cylinder(Vector(0,0,0) ,1, 5,50));
+    Mesh cylindreMesh = Mesh(Cylinder(Vector(0,0,0) ,1, 2,50));
 
     std::vector<Color> cols;
     cols.resize(cylindreMesh.Vertexes());
