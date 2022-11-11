@@ -19,9 +19,9 @@ public:
   static const Capsule Null; //!< Empty sphere.
   //Sphere();
   Capsule(const Vector&, double, double, int);
-  //Vector TorusPolaire(int, int);
+  Vector capsulePolaire(int, int);
 
-  //void generatePoints();
+  void generatePoints();
   //! Empty.
   ~Capsule() {}
 };

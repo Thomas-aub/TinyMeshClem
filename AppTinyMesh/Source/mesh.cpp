@@ -237,6 +237,41 @@ Mesh::Mesh(const Sphere& sphere)
        }
   }
 }
+
+Mesh::Mesh(const Capsule& capsule)
+{
+  // Vertices
+  vertices.resize(capsule.nbPoints*capsule.nbPoints);
+
+  for (int i = 0; i < capsule.nbPoints*capsule.nbPoints; i++)
+
+  {
+    vertices[i] = capsule.points[i];
+    std::cout<<capsule.points[i]<<std::endl;
+
+  }
+
+  // Reserve space for the triangle array
+  varray.reserve(capsule.nbPoints * capsule.nbPoints);
+  narray.reserve(capsule.nbPoints * capsule.nbPoints);
+
+  for(const Vector v : capsule.points){
+      normals.push_back(Vector(capsule.centre[0],capsule.centre[1],capsule.centre[2])-v);
+  }
+  for(int i =0; i<capsule.nbPoints-1; i++){
+       for(int j =0; j<capsule.nbPoints-1; j++){
+            AddSmoothTriangle(
+                  i*capsule.nbPoints+j, i*capsule.nbPoints+j,
+                  (i+1)*capsule.nbPoints+j,(i+1)*capsule.nbPoints+j,
+                  (i+1)*capsule.nbPoints+(j+1),(i+1)*capsule.nbPoints+(j+1));
+
+            AddSmoothTriangle(
+                  i*capsule.nbPoints+j, i*capsule.nbPoints+j,
+                  (i+1)*capsule.nbPoints+(j+1), (i+1)*capsule.nbPoints+(j+1),
+                  (i)*capsule.nbPoints+(j+1), (i)*capsule.nbPoints+(j+1));
+       }
+  }
+}
 Mesh::Mesh(const Torus& torus){
     vertices.resize(torus.points.size());
 
@@ -299,6 +334,7 @@ Mesh::Mesh(const Cylinder& cylinder)
              i+2, i+2);
         }
 }
+
 
 
 

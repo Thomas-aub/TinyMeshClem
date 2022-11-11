@@ -67,7 +67,7 @@ void MainWindow::BoxMeshExample()
 void MainWindow::SphereMeshExemple()
 {
 
-    Mesh sphereMesh = Mesh(Sphere(Vector(0,0,0), 1,50));
+    Mesh sphereMesh = Mesh(Capsule(Vector(0,0,0), 1,2, 50));
 
     std::vector<Color> cols;
     cols.resize(sphereMesh.Vertexes());

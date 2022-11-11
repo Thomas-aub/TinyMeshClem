@@ -60,13 +60,13 @@ macx {
     LIBS += -lGLEW -lGL -lGLU
 }
 
-## Copy shader files
-## $$shell_quote puts quote around the path, to make it work if it contains space or other special characters.
-#copydata.commands = $(COPY_DIR) $$shell_quote($$PWD/AppTinyMesh/Shaders) $$shell_quote($$OUT_PWD/Shaders)
-#first.depends = $(first) copydata
-#export(first.depends)
-#export(copydata.commands)
-#QMAKE_EXTRA_TARGETS += first copydata
+# Copy shader files
+# $$shell_quote puts quote around the path, to make it work if it contains space or other special characters.
+copydata.commands = $(COPY_DIR) $$shell_quote($$PWD/AppTinyMesh/Shaders) $$shell_quote($$OUT_PWD/Shaders)
+first.depends = $(first) copydata
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
