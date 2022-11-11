@@ -6,6 +6,8 @@
 #include "mathematics.h"
 #include "torus.h"
 #include "matrix.h"
+#include "cylinder.h"
+#include "capsule.h"
 
 
 // Triangle
@@ -133,6 +135,8 @@ public:
   explicit Mesh(const Box&);
   explicit Mesh(const Sphere&);
   explicit Mesh(const Torus& torus);
+  explicit Mesh(const Cylinder& cylinder);
+  explicit Mesh(const Capsule& capsule);
 
   void Load(const QString&);
   void SaveObj(const QString&, const QString&) const;

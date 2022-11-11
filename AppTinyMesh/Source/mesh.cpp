@@ -267,6 +267,39 @@ Mesh::Mesh(const Torus& torus){
     }
 }
 
+Mesh::Mesh(const Cylinder& cylinder)
+{
+    vertices.resize(cylinder.points.size()*2+1);
+    int i = 0;
+    for(const Vector v: cylinder.points){
+        vertices[i] = v;
+        i++;
+        normals.push_back(Vector(v));
+
+    }
+    int k1 = 0;
+    int k2= cylinder.nbPoints+1;
+    for(int i =2; i <=cylinder.nbPoints*2+1; i++){
+        if(i%2 == 0){
+        AddSmoothTriangle(
+                  0, 0,
+                  i, i,
+                  i+2, i+2);
+        }
+        else{
+        AddSmoothTriangle(
+            1, 1,
+            i, i,
+            i+2, i+2);
+        }
+
+        AddSmoothTriangle(
+             i, i,
+             i+1, i+1,
+             i+2, i+2);
+        }
+}
+
 
 
 /*!

@@ -6,7 +6,7 @@
 #include "meshcolor.h"
 
 QT_BEGIN_NAMESPACE
-	namespace Ui { class Assets; }
+    namespace Ui { class Assets; }
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -30,6 +30,7 @@ public slots:
   void BoxMeshExample();
   void SphereMeshExemple();
   void TorusMeshExemple();
+  void CylindreMeshExemple();
   void SphereImplicitExample();
   void ResetCamera();
   void UpdateMaterial();

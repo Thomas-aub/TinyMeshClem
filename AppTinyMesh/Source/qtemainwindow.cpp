@@ -4,42 +4,43 @@
 
 MainWindow::MainWindow() : QMainWindow(), uiw(new Ui::Assets)
 {
-	// Chargement de l'interface
+    // Chargement de l'interface
     uiw->setupUi(this);
 
-	// Chargement du GLWidget
-	meshWidget = new MeshWidget;
-	QGridLayout* GLlayout = new QGridLayout;
-	GLlayout->addWidget(meshWidget, 0, 0);
-	GLlayout->setContentsMargins(0, 0, 0, 0);
+    // Chargement du GLWidget
+    meshWidget = new MeshWidget;
+    QGridLayout* GLlayout = new QGridLayout;
+    GLlayout->addWidget(meshWidget, 0, 0);
+    GLlayout->setContentsMargins(0, 0, 0, 0);
     uiw->widget_GL->setLayout(GLlayout);
 
-	// Creation des connect
-	CreateActions();
+    // Creation des connect
+    CreateActions();
 
-	meshWidget->SetCamera(Camera(Vector(10, 0, 0), Vector(0.0, 0.0, 0.0)));
+    meshWidget->SetCamera(Camera(Vector(10, 0, 0), Vector(0.0, 0.0, 0.0)));
 }
 
 MainWindow::~MainWindow()
 {
-	delete meshWidget;
+    delete meshWidget;
 }
 
 void MainWindow::CreateActions()
 {
-	// Buttons
+    // Buttons
     connect(uiw->boxMesh, SIGNAL(clicked()), this, SLOT(BoxMeshExample()));
     connect(uiw->sphereMesh, SIGNAL(clicked()),this,SLOT(SphereMeshExemple()));
-    connect(uiw->taurusMesh, SIGNAL(clicked()),this,SLOT(TorusMeshExemple()));
+    connect(uiw->torusMesh, SIGNAL(clicked()),this,SLOT(TorusMeshExemple()));
+    connect(uiw->cylinderMesh, SIGNAL(clicked()),this,SLOT(CylindreMeshExemple()));
     connect(uiw->sphereImplicit, SIGNAL(clicked()), this, SLOT(SphereImplicitExample()));
     connect(uiw->resetcameraButton, SIGNAL(clicked()), this, SLOT(ResetCamera()));
     connect(uiw->wireframe, SIGNAL(clicked()), this, SLOT(UpdateMaterial()));
     connect(uiw->radioShadingButton_1, SIGNAL(clicked()), this, SLOT(UpdateMaterial()));
     connect(uiw->radioShadingButton_2, SIGNAL(clicked()), this, SLOT(UpdateMaterial()));
 
-	// Widget edition
-	connect(meshWidget, SIGNAL(_signalEditSceneLeft(const Ray&)), this, SLOT(editingSceneLeft(const Ray&)));
-	connect(meshWidget, SIGNAL(_signalEditSceneRight(const Ray&)), this, SLOT(editingSceneRight(const Ray&)));
+    // Widget edition
+    connect(meshWidget, SIGNAL(_signalEditSceneLeft(const Ray&)), this, SLOT(editingSceneLeft(const Ray&)));
+    connect(meshWidget, SIGNAL(_signalEditSceneRight(const Ray&)), this, SLOT(editingSceneRight(const Ray&)));
 }
 
 void MainWindow::editingSceneLeft(const Ray&)
@@ -52,15 +53,15 @@ void MainWindow::editingSceneRight(const Ray&)
 
 void MainWindow::BoxMeshExample()
 {
-	Mesh boxMesh = Mesh(Box(1.0));
+    Mesh boxMesh = Mesh(Box(1.0));
 
-	std::vector<Color> cols;
-	cols.resize(boxMesh.Vertexes());
+    std::vector<Color> cols;
+    cols.resize(boxMesh.Vertexes());
     for (size_t i = 0; i < cols.size(); i++)
-		cols[i] = Color(double(i) / 6.0, fmod(double(i) * 39.478378, 1.0), 0.0);
+        cols[i] = Color(double(i) / 6.0, fmod(double(i) * 39.478378, 1.0), 0.0);
 
-	meshColor = MeshColor(boxMesh, cols, boxMesh.VertexIndexes());
-	UpdateGeometry();
+    meshColor = MeshColor(boxMesh, cols, boxMesh.VertexIndexes());
+    UpdateGeometry();
 }
 
 void MainWindow::SphereMeshExemple()
@@ -104,14 +105,30 @@ void MainWindow::SphereMeshExemple()
 void MainWindow::TorusMeshExemple()
 {
 
-    Mesh sphereMesh = Mesh(Torus(Vector(0,0,0), 3 , 5 , 50 , 50));
+    Mesh torusMesh = Mesh(Torus(Vector(0,0,0) ,2 ,5 ,50 ,50));
 
     std::vector<Color> cols;
-    cols.resize(sphereMesh.Vertexes());
+    cols.resize(torusMesh.Vertexes());
     for (int i = 0; i < cols.size(); i++)
         cols[i] = Color(double(i) / 6.0, fmod(double(i) * 39.478378, 1.0), 0.0);
 
-    meshColor = MeshColor(sphereMesh, cols, sphereMesh.VertexIndexes());
+    meshColor = MeshColor(torusMesh, cols, torusMesh.VertexIndexes());
+
+    UpdateGeometry();//ne pas appeler pour debuger les points
+
+}
+
+void MainWindow::CylindreMeshExemple()
+{
+
+    Mesh cylindreMesh = Mesh(Cylinder(Vector(0,0,0) ,1, 5,50));
+
+    std::vector<Color> cols;
+    cols.resize(cylindreMesh.Vertexes());
+    for (int i = 0; i < cols.size(); i++)
+        cols[i] = Color(double(i) / 6.0, fmod(double(i) * 39.478378, 1.0), 0.0);
+
+    meshColor = MeshColor(cylindreMesh, cols, cylindreMesh.VertexIndexes());
 
     UpdateGeometry();//ne pas appeler pour debuger les points
 
@@ -134,13 +151,13 @@ void MainWindow::SphereImplicitExample()
 
 void MainWindow::UpdateGeometry()
 {
-	meshWidget->ClearAll();
-	meshWidget->AddMesh("BoxMesh", meshColor);
+    meshWidget->ClearAll();
+    meshWidget->AddMesh("BoxMesh", meshColor);
 
     uiw->lineEdit->setText(QString::number(meshColor.Vertexes()));
     uiw->lineEdit_2->setText(QString::number(meshColor.Triangles()));
 
-	UpdateMaterial();
+    UpdateMaterial();
 }
 
 void MainWindow::UpdateMaterial()
@@ -148,12 +165,12 @@ void MainWindow::UpdateMaterial()
     meshWidget->UseWireframeGlobal(uiw->wireframe->isChecked());
 
     if (uiw->radioShadingButton_1->isChecked())
-		meshWidget->SetMaterialGlobal(MeshMaterial::Normal);
-	else
-		meshWidget->SetMaterialGlobal(MeshMaterial::Color);
+        meshWidget->SetMaterialGlobal(MeshMaterial::Normal);
+    else
+        meshWidget->SetMaterialGlobal(MeshMaterial::Color);
 }
 
 void MainWindow::ResetCamera()
 {
-	meshWidget->SetCamera(Camera(Vector(-10.0), Vector(0.0)));
+    meshWidget->SetCamera(Camera(Vector(-10.0), Vector(0.0)));
 }
