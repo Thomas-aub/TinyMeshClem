@@ -442,18 +442,12 @@ Mesh& Mesh::Scale(const Vector &scale)
 
 void Mesh::merge(const Mesh &m)
 {
-  int sV = m.varray.size();
-  int sN = m.narray.size();
-  for(int i = 0; i < sV; i++)
+  for(int i=0; i<(int)m.varray.size(); i++)
   {
-    //std::cout<<i<<" s = "<< sV<<std::endl;
-    //std::cout<<mesh.varray.at(i)<<std::endl;
     this->varray.push_back(m.varray.at(i) + this->vertices.size());
   }
-  for(int i = 0; i < sN; i++)
+  for(int i=0; i<(int)m.narray.size(); i++)
   {
-    //std::cout<<i<<" ns = "<< sN<<std::endl;
-    //std::cout<<mesh.narray.at(i)<<std::endl;
     this->narray.push_back(m.narray.at(i) + this->normals.size());
   }
 
