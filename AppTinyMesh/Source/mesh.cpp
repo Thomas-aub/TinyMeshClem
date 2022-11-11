@@ -372,3 +372,69 @@ void Mesh::SaveObj(const QString& url, const QString& meshName) const
   data.close();
 }
 
+Mesh& Mesh::Transform(const Matrix &m)
+{
+  for (int i=0; i<(int)vertices.size(); i++)
+  {
+    vertices[i] = m * vertices[i];
+  }
+  for (int i=0; i<(int)normals.size(); i++)
+  {
+    normals[i] = m * normals[i];
+  }
+  SmoothNormals();
+
+  return (*this);
+}
+
+Mesh& Mesh::RotationX(double angle)
+{
+  return Transform(Matrix::RotationX(angle));
+}
+
+Mesh& Mesh::RotationY(double angle)
+{
+  return Transform(Matrix::RotationY(angle));
+}
+
+Mesh& Mesh::RotationZ(double angle)
+{
+  return Transform(Matrix::RotationZ(angle));
+}
+
+Mesh& Mesh::Scale(const Vector &scale)
+{
+  return Transform(Matrix::Scale(scale));
+}
+
+void Mesh::merge(const Mesh &m)
+{
+  int sV = m.varray.size();
+  int sN = m.narray.size();
+  for(int i = 0; i < sV; i++)
+  {
+    //std::cout<<i<<" s = "<< sV<<std::endl;
+    //std::cout<<mesh.varray.at(i)<<std::endl;
+    this->varray.push_back(m.varray.at(i) + this->vertices.size());
+  }
+  for(int i = 0; i < sN; i++)
+  {
+    //std::cout<<i<<" ns = "<< sN<<std::endl;
+    //std::cout<<mesh.narray.at(i)<<std::endl;
+    this->narray.push_back(m.narray.at(i) + this->normals.size());
+  }
+
+  for(int i=0; i<(int)m.vertices.size(); i++)
+  {
+    this->vertices.push_back(m.vertices.at(i));
+  }
+  for(int i=0; i<(int)m.normals.size(); i++)
+  {
+    this->normals.push_back(m.normals.at(i));
+  }
+
+}
+
+
+
+

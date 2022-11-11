@@ -5,6 +5,8 @@
 #include "ray.h"
 #include "mathematics.h"
 #include "torus.h"
+#include "matrix.h"
+
 
 // Triangle
 class Triangle
@@ -119,6 +121,13 @@ public:
   void Scale(double);
 
   void SmoothNormals();
+
+  Mesh& Transform(const Matrix &m);
+  Mesh& RotationX(double angle);
+  Mesh& RotationY(double angle);
+  Mesh& RotationZ(double angle);
+  Mesh& Scale(const Vector &v);
+  void merge(const Mesh &m);
 
   // Constructors from core classes
   explicit Mesh(const Box&);

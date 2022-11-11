@@ -1,5 +1,6 @@
 #ifndef MATRIX_H
 #define MATRIX_H
+#include "mathematics.h"
 
 class Matrix
 {
@@ -22,6 +23,8 @@ public:
   Matrix operator+(float x) const;
   Matrix operator-(float x) const;
   Matrix operator/(float x) const;
+  Vector operator*(const Vector &v) const;
+
 
   Matrix static RotationX(double angle);
   Matrix static RotationY(double angle);
@@ -33,7 +36,8 @@ public:
 
   Matrix Inverse();
 
-  Matrix Scale(double scale);
+  Matrix static Scale(double scale);
+  Matrix static Scale(const Vector &scale);
 
 
 };

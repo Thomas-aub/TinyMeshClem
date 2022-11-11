@@ -52,6 +52,24 @@ Matrix Matrix::operator*(float x) const{
                     matrix[0] * x, matrix[0] * x, matrix[0] * x);
 }
 
+Vector Matrix::operator*(const Vector &v) const
+{
+    Vector res;
+
+    for (int i=0; i<8; i++){
+        if(i <= 2){
+            res[0] += matrix[i] * v[i];
+        }
+        if(i <= 5){
+            res[1] += matrix[i] * v[i];
+        }
+        if(i <= 8){
+            res[2] += matrix[i] * v[i];
+        }
+    }
+    return res;
+}
+
 Matrix Matrix::operator+(const Matrix& m) const {
     return Matrix(  matrix[0] + m.matrix[0], matrix[1] + m.matrix[1], matrix[2] + m.matrix[2],
                     matrix[3] + m.matrix[3], matrix[4] + m.matrix[4], matrix[5] + m.matrix[5],
@@ -102,8 +120,14 @@ Matrix Matrix::Transpose(){
 
 
 Matrix Matrix::Scale(double scale){
-    Matrix r = Matrix(scale,0,0,0,scale,0,0,0,scale);
-    return r;
+    return Matrix(scale,0,0,0,scale,0,0,0,scale);
+}
+
+Matrix Matrix::Scale(const Vector &s)
+{
+    return Matrix(s[0], 0, 0,
+                  0, s[1], 0,
+                  0, 0, s[2]);
 }
 
 float Matrix::Determinant(){
