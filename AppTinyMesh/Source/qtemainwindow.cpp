@@ -3,6 +3,9 @@
 #include "ui_interface.h"
 #include <chrono>
 
+/*!
+\brief Creates the User's window.
+*/
 MainWindow::MainWindow() : QMainWindow(), uiw(new Ui::Assets)
 {
     // Chargement de l'interface
@@ -21,11 +24,17 @@ MainWindow::MainWindow() : QMainWindow(), uiw(new Ui::Assets)
     meshWidget->SetCamera(Camera(Vector(10, 0, 0), Vector(0.0, 0.0, 0.0)));
 }
 
+/*!
+\brief Deletes the User's window on the heap.
+*/
 MainWindow::~MainWindow()
 {
     delete meshWidget;
 }
 
+/*!
+\brief Links User's'actions on the Interface with associated functions.
+*/
 void MainWindow::CreateActions()
 {
     // Buttons
@@ -45,14 +54,10 @@ void MainWindow::CreateActions()
     connect(meshWidget, SIGNAL(_signalEditSceneRight(const Ray&)), this, SLOT(editingSceneRight(const Ray&)));
 }
 
-void MainWindow::editingSceneLeft(const Ray&)
-{
-}
 
-void MainWindow::editingSceneRight(const Ray&)
-{
-}
-
+/*!
+\brief Generates and displays the mesh of a box.
+*/
 void MainWindow::BoxMeshExample()
 {
     Mesh boxMesh = Mesh(Box(1.0));
@@ -66,6 +71,9 @@ void MainWindow::BoxMeshExample()
     UpdateGeometry();
 }
 
+/*!
+\brief Generates and displays the mesh of a sphere.
+*/
 void MainWindow::SphereMeshExemple()
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -88,7 +96,9 @@ void MainWindow::SphereMeshExemple()
     std::cout << "Sphere is " << float_ms.count() << " milliseconds" << std::endl;
 }
 
-
+/*!
+\brief Generates and displays the mesh of a capsule.
+*/
 void MainWindow::CapsuleMeshExemple()
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -111,6 +121,9 @@ void MainWindow::CapsuleMeshExemple()
     std::cout << "Capsule is " << float_ms.count() << " milliseconds" << std::endl;
 }
 
+/*!
+\brief Generates and displays the mesh of a torus.
+*/
 void MainWindow::TorusMeshExemple()
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -134,6 +147,9 @@ void MainWindow::TorusMeshExemple()
 
 }
 
+/*!
+\brief Generates and displays the mesh of a cylindre.
+*/
 void MainWindow::CylindreMeshExemple()
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -156,6 +172,9 @@ void MainWindow::CylindreMeshExemple()
 
 }
 
+/*!
+\brief Generates and displays the mesh of a sphere created implicitly.
+*/
 void MainWindow::SphereImplicitExample()
 {
   AnalyticScalarField implicit;
@@ -171,6 +190,9 @@ void MainWindow::SphereImplicitExample()
   UpdateGeometry();
 }
 
+/*!
+\brief Generates an image on the User's Interface and the statistics of the image.
+*/
 void MainWindow::UpdateGeometry()
 {
     meshWidget->ClearAll();
@@ -182,6 +204,9 @@ void MainWindow::UpdateGeometry()
     UpdateMaterial();
 }
 
+/*!
+\brief Generates an image on the User's Interface.
+*/
 void MainWindow::UpdateMaterial()
 {
     meshWidget->UseWireframeGlobal(uiw->wireframe->isChecked());
@@ -192,6 +217,9 @@ void MainWindow::UpdateMaterial()
         meshWidget->SetMaterialGlobal(MeshMaterial::Color);
 }
 
+/*!
+\brief Sets the camera on a default value on the User's Interface.
+*/
 void MainWindow::ResetCamera()
 {
     meshWidget->SetCamera(Camera(Vector(-10.0), Vector(0.0)));

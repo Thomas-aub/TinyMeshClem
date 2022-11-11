@@ -203,6 +203,11 @@ Mesh::Mesh(const Box& box)
   AddTriangle(6, 7, 2, 3);
 }
 
+/**
+ * @brief Construct a new sphere Mesh
+ *
+ * @param sphere Sphere with needed data
+ */
 Mesh::Mesh(const Sphere& sphere)
 {
   // Vertices
@@ -238,6 +243,11 @@ Mesh::Mesh(const Sphere& sphere)
   }
 }
 
+/**
+ * @brief Construct a new capsule Mesh
+ *
+ * @param capsule Capsule with needed data
+ */
 Mesh::Mesh(const Capsule& capsule)
 {
   // Vertices
@@ -272,6 +282,12 @@ Mesh::Mesh(const Capsule& capsule)
        }
   }
 }
+
+/**
+ * @brief Construct a new torus Mesh
+ *
+ * @param torus Torus with needed data
+ */
 Mesh::Mesh(const Torus& torus){
     vertices.resize(torus.points.size());
 
@@ -302,6 +318,11 @@ Mesh::Mesh(const Torus& torus){
     }
 }
 
+/**
+ * @brief Construct a new cylinder Mesh
+ *
+ * @param cylinder Cylinder with needed data
+ */
 Mesh::Mesh(const Cylinder& cylinder)
 {
     vertices.resize(cylinder.points.size()*2+1);

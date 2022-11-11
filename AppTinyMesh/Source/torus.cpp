@@ -1,6 +1,18 @@
 #include "../Include/torus.h"
 #include <math.h>
+/**
+ * @class Torus torus.h
+ * @brief Torus volumic representation.
+ */
 
+/**
+ * @brief Construct a new Torus object
+ *
+ * @param centre Center of the torus (Vector)
+ * @param rayon Radius of the torus
+ * @param taille Height of the torus cylinder
+ * @param nbPoints Number of points we wish to draw
+ */
 Torus::Torus(const Vector& c, double inner, double outer, int stt , int sls)
 {
   centre = c;
@@ -10,6 +22,11 @@ Torus::Torus(const Vector& c, double inner, double outer, int stt , int sls)
   innerR = inner;
   generatePoints();
 }
+
+/**
+ * @brief Generate the points of our cylinder
+ *
+ */
 void Torus::generatePoints(){
     for(int stack = 0; stack<=st; stack++){
         for(int slice = 0; slice<= sl; slice++){
@@ -17,6 +34,13 @@ void Torus::generatePoints(){
         }
     }
 }
+
+/**
+ * @brief Return a vector of polar coordinate
+ *
+ * @param i floor
+ * @param j step
+ */
 Vector Torus::TorusPolaire(int stack, int slice){
 
     double sta = double(stack);
@@ -31,10 +55,4 @@ Vector Torus::TorusPolaire(int stack, int slice){
            cos(theta) * (outerR + cos(phi) * innerR),
            sin(theta) * (outerR + cos(phi) * innerR),
            sin(phi) * innerR);
-
-/*
-                2*std::pow(cos(theta),3) * (outerR + cos(phi) * innerR),
-                1*std::pow(sin(theta),3) * (outerR + cos(phi) * innerR),
-                sin(phi) * innerR);
-                            */
 }

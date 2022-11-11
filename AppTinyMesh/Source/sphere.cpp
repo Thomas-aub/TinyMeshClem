@@ -1,6 +1,16 @@
 #include "sphere.h"
 #include <math.h>
+/**
+ * @class Sphere sphere.h
+ * @brief Sphere volumic representation.
+ */
 
+/**
+ * @brief Construct a new Sphere object
+ *
+ * @param centre Center of the sphere (Vector)
+ * @param rayon Radius of the sphere
+ */
 Sphere::Sphere(const Vector& c, double r)
 {
   centre = c;
@@ -9,6 +19,13 @@ Sphere::Sphere(const Vector& c, double r)
   generatePoints();
 }
 
+/**
+ * @brief Construct a new Sphere object
+ *
+ * @param centre Center of the sphere (Vector)
+ * @param rayon Radius of the sphere
+ * @param nbPoints Number of points we wish to draw
+ */
 Sphere::Sphere(const Vector& c, double r, int n)
 {
   centre = c;
@@ -17,6 +34,10 @@ Sphere::Sphere(const Vector& c, double r, int n)
   generatePoints();
 }
 
+/**
+ * @brief Generate the points of our cylinder
+ *
+ */
 void Sphere::generatePoints(){
    for(int i =0; i< nbPoints; i++){
        for (int j = 0 ; j < nbPoints ; j++){
@@ -24,9 +45,16 @@ void Sphere::generatePoints(){
         }
    }
 }
+
+/**
+ * @brief Return a vector of polar coordinate
+ *
+ * @param i floor
+ * @param j step
+ */
 Vector Sphere::SpherePolaire(int i, int j){
-    const double stepI = (2.0 * M_PI) /double(nbPoints-1); // pour l'angle sur i, dans [0, 2pi]
-    const double stepJ =  M_PI / double(nbPoints-1); // pour l'angle sur j, dans [-pi/2, pi/2]
+    const double stepI = (2.0 * M_PI) /double(nbPoints-1);
+    const double stepJ =  M_PI / double(nbPoints-1);
     double theta = M_PI /2.0 - double(i) * stepI;
     double phi = double(j) * stepJ;
     return (Vector(
