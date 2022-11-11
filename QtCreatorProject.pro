@@ -16,6 +16,7 @@ SOURCES += \
     AppTinyMesh/Source/implicits.cpp \
     AppTinyMesh/Source/main.cpp \
     AppTinyMesh/Source/camera.cpp \
+    AppTinyMesh/Source/matrix.cpp \
     AppTinyMesh/Source/mesh.cpp \
     AppTinyMesh/Source/meshcolor.cpp \
     AppTinyMesh/Source/mesh-widget.cpp \
@@ -32,6 +33,7 @@ HEADERS += \
     AppTinyMesh/Include/color.h \
     AppTinyMesh/Include/implicits.h \
     AppTinyMesh/Include/mathematics.h \
+    AppTinyMesh/Include/matrix.h \
     AppTinyMesh/Include/mesh.h \
     AppTinyMesh/Include/meshcolor.h \
     AppTinyMesh/Include/qte.h \
@@ -54,13 +56,13 @@ macx {
     LIBS += -lGLEW -lGL -lGLU
 }
 
-# Copy shader files
-# $$shell_quote puts quote around the path, to make it work if it contains space or other special characters.
-copydata.commands = $(COPY_DIR) $$shell_quote($$PWD/AppTinyMesh/Shaders) $$shell_quote($$OUT_PWD/Shaders)
-first.depends = $(first) copydata
-export(first.depends)
-export(copydata.commands)
-QMAKE_EXTRA_TARGETS += first copydata
+## Copy shader files
+## $$shell_quote puts quote around the path, to make it work if it contains space or other special characters.
+#copydata.commands = $(COPY_DIR) $$shell_quote($$PWD/AppTinyMesh/Shaders) $$shell_quote($$OUT_PWD/Shaders)
+#first.depends = $(first) copydata
+#export(first.depends)
+#export(copydata.commands)
+#QMAKE_EXTRA_TARGETS += first copydata
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
