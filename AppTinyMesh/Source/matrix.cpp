@@ -6,7 +6,7 @@
  */
 
 /**
- * @brief Construct a new Matrix object
+ * @brief Construct by default
  *
  */
 Matrix::Matrix(){
@@ -38,8 +38,9 @@ Matrix::Matrix(double m[9]){
 }
 
 /**
- * @brief Construct by default
+ * @brief Construct a new Matrix object from 9 double
  *
+ * @param 9 double
  */
 Matrix::Matrix(  double a, double b, double c,
                  double d, double e, double f,
