@@ -68,7 +68,7 @@ void MainWindow::BoxMeshExample()
 
 void MainWindow::SphereMeshExemple()
 {
-
+    auto start = std::chrono::high_resolution_clock::now();
 
     Mesh sphereMesh = Mesh(Sphere(Vector(0,0,0), 1, 50));
 
@@ -81,33 +81,18 @@ void MainWindow::SphereMeshExemple()
 
     UpdateGeometry();//ne pas appeler pour debuger les points
 
+    auto end = std::chrono::high_resolution_clock::now();
 
-/*
-    Sphere s = Sphere(Vector(0.0,0.0,0.0),1,10);
-    */
-    /*
-    Torus s = (Torus(Vector(0,0,0), 1,5,50,50));
-    Mesh boxMesh = Mesh(s);
-    int w =0;
-    for(const Vector v: s.points){
-        Box b = Box(v, 0.1);
-        Mesh m  = Mesh(b);
-        meshWidget->AddMesh(QString::number(w),m);
-        w++;
-    }
-    std::vector<Color> cols;
-    cols.resize(boxMesh.Vertexes());
+    std::chrono::duration<double, std::milli> float_ms = end - start;
 
-    for (int i = 0; i < cols.size(); i++)
-        cols[i] = Color(double(i) / 6.0, fmod(double(i) * 39.478378, 1.0), 0.0);
-
-    meshColor = MeshColor(boxMesh, cols, boxMesh.VertexIndexes());
-    */
+    std::cout << "Sphere is " << float_ms.count() << " milliseconds" << std::endl;
 }
 
 
 void MainWindow::CapsuleMeshExemple()
 {
+    auto start = std::chrono::high_resolution_clock::now();
+
     Mesh capsuleMesh = Mesh(Capsule(Vector(0,0,0), 1, 2, 50));
 
     std::vector<Color> cols;
@@ -118,10 +103,17 @@ void MainWindow::CapsuleMeshExemple()
     meshColor = MeshColor(capsuleMesh, cols, capsuleMesh.VertexIndexes());
 
     UpdateGeometry();//ne pas appeler pour debuger les points
+
+    auto end = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double, std::milli> float_ms = end - start;
+
+    std::cout << "Capsule is " << float_ms.count() << " milliseconds" << std::endl;
 }
 
 void MainWindow::TorusMeshExemple()
 {
+    auto start = std::chrono::high_resolution_clock::now();
 
     Mesh torusMesh = Mesh(Torus(Vector(0,0,0) ,2 ,5 ,50 ,50));
 
@@ -134,11 +126,17 @@ void MainWindow::TorusMeshExemple()
 
     UpdateGeometry();//ne pas appeler pour debuger les points
 
+    auto end = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double, std::milli> float_ms = end - start;
+
+    std::cout << "Torus is " << float_ms.count() << " milliseconds" << std::endl;
+
 }
 
 void MainWindow::CylindreMeshExemple()
 {
-
+    auto start = std::chrono::high_resolution_clock::now();
     Mesh cylindreMesh = Mesh(Cylinder(Vector(0,0,0) ,1, 2,50));
 
     std::vector<Color> cols;
@@ -149,6 +147,12 @@ void MainWindow::CylindreMeshExemple()
     meshColor = MeshColor(cylindreMesh, cols, cylindreMesh.VertexIndexes());
 
     UpdateGeometry();//ne pas appeler pour debuger les points
+
+    auto end = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double, std::milli> float_ms = end - start;
+
+    std::cout << "Cylinder is " << float_ms.count() << " milliseconds" << std::endl;
 
 }
 
